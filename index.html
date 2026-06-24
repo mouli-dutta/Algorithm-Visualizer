@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive Algorithm Visualizer - Learn algorithms and data structures through beautiful visualizations">
+    <title>Algorithm Visualizer - Learn Algorithms Interactively</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div id="welcomeScreen" class="welcome-screen active">
+        <div class="particles-bg"></div>
+        <div class="welcome-content">
+            <h1 class="welcome-title">Algorithm Visualizer</h1>
+            <p class="welcome-subtitle">Master algorithms through interactive visualizations</p>
+            <div class="welcome-features">
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>15+ Algorithms</h3>
+                    <p>Sorting, Searching, Graphs & More</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Visual Learning</h3>
+                    <p>Step-by-step animations</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Interactive Quizzes</h3>
+                    <p>Test your knowledge</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Track Progress</h3>
+                    <p>Monitor your learning journey</p>
+                </div>
+            </div>
+            <button class="btn-primary btn-large" id="getStartedBtn">
+                Get Started
+                <span class="btn-arrow">→</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="mainApp" class="main-app">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <h1 class="app-title">Algorithm Visualizer</h1>
+            </div>
+            <div class="header-right">
+                <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="icon-btn" id="progressBtn" aria-label="View progress">
+                    <span>📊</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="header-title-row">
+                    <h2>Algorithms</h2>
+                    <button class="collapse-btn" id="sidebarCollapseBtn" aria-label="Collapse sidebar" title="Collapse sidebar">
+                        <span class="collapse-icon">◀</span>
+                    </button>
+                </div>
+                <input type="text" class="search-input" id="algorithmSearch" placeholder="Search algorithms...">
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-category">
+                    <h3 class="category-title" data-category="sorting">
+                        <span class="category-icon">🔄</span>
+                        Sorting Algorithms
+                        <span class="category-arrow">▼</span>
+                    </h3>
+                    <ul class="category-items">
+                        <li><button class="nav-item" data-algorithm="bubbleSort">Bubble Sort</button></li>
+                        <li><button class="nav-item" data-algorithm="selectionSort">Selection Sort</button></li>
+                        <li><button class="nav-item" data-algorithm="insertionSort">Insertion Sort</button></li>
+                        <li><button class="nav-item" data-algorithm="mergeSort">Merge Sort</button></li>
+                        <li><button class="nav-item" data-algorithm="quickSort">Quick Sort</button></li>
+                        <li><button class="nav-item" data-algorithm="heapSort">Heap Sort</button></li>
+                    </ul>
+                </div>
+                <div class="nav-category">
+                    <h3 class="category-title" data-category="searching">
+                        <span class="category-icon">🔍</span>
+                        Searching Algorithms
+                        <span class="category-arrow">▼</span>
+                    </h3>
+                    <ul class="category-items">
+                        <li><button class="nav-item" data-algorithm="linearSearch">Linear Search</button></li>
+                        <li><button class="nav-item" data-algorithm="binarySearch">Binary Search</button></li>
+                        <li><button class="nav-item" data-algorithm="jumpSearch">Jump Search</button></li>
+                        <li><button class="nav-item" data-algorithm="interpolationSearch">Interpolation Search</button></li>
+                        <li><button class="nav-item" data-algorithm="exponentialSearch">Exponential Search</button></li>
+                        <li><button class="nav-item" data-algorithm="ternarySearch">Ternary Search</button></li>
+                    </ul>
+                </div>
+                <div class="nav-category">
+                    <h3 class="category-title" data-category="graph">
+                        <span class="category-icon">🕸️</span>
+                        Graph Algorithms
+                        <span class="category-arrow">▼</span>
+                    </h3>
+                    <ul class="category-items">
+                        <li><button class="nav-item" data-algorithm="bfs">Breadth First Search</button></li>
+                        <li><button class="nav-item" data-algorithm="dfs">Depth First Search</button></li>
+                        <li><button class="nav-item" data-algorithm="dijkstra">Dijkstra's Algorithm</button></li>
+                        <li><button class="nav-item" data-algorithm="aStar">A* Pathfinding</button></li>
+                    </ul>
+                </div>
+                <div class="nav-category">
+                    <h3 class="category-title" data-category="dataStructures">
+                        <span class="category-icon">📦</span>
+                        Data Structures
+                        <span class="category-arrow">▼</span>
+                    </h3>
+                    <ul class="category-items">
+                        <li><button class="nav-item" data-algorithm="stack">Stack</button></li>
+                        <li><button class="nav-item" data-algorithm="queue">Queue</button></li>
+                        <li><button class="nav-item" data-algorithm="linkedList">Linked List</button></li>
+                        <li><button class="nav-item" data-algorithm="bst">Binary Search Tree</button></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Statistics Panel -->
+            <div class="statistics-panel" id="statisticsPanel">
+                <div class="stat-item">
+                    <span class="stat-label">Comparisons</span>
+                    <span class="stat-value" id="statComparisons">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Swaps</span>
+                    <span class="stat-value" id="statSwaps">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Iterations</span>
+                    <span class="stat-value" id="statIterations">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Time</span>
+                    <span class="stat-value" id="statTime">0ms</span>
+                </div>
+            </div>
+
+            <!-- Visualization Canvas -->
+            <div class="visualization-container">
+                <div class="canvas-wrapper">
+                    <canvas id="visualizationCanvas" aria-label="Algorithm visualization canvas"></canvas>
+                    <div id="graphContainer" class="graph-container hidden"></div>
+                    <div id="dsContainer" class="ds-container hidden"></div>
+                </div>
+                <div class="execution-log" id="executionLog">
+                    <div class="log-header">Execution Log</div>
+                    <div class="log-content" id="logContent"></div>
+                </div>
+            </div>
+
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <div class="control-group">
+                    <button class="control-btn" id="playBtn" aria-label="Play animation">
+                        <span class="btn-icon">▶️</span>
+                        <span class="btn-text">Play</span>
+                    </button>
+                    <button class="control-btn" id="pauseBtn" aria-label="Pause animation" disabled>
+                        <span class="btn-icon">⏸️</span>
+                        <span class="btn-text">Pause</span>
+                    </button>
+                    <button class="control-btn" id="resetBtn" aria-label="Reset visualization">
+                        <span class="btn-icon">🔄</span>
+                        <span class="btn-text">Reset</span>
+                    </button>
+                    <button class="control-btn" id="stepBtn" aria-label="Step forward">
+                        <span class="btn-icon">⏭️</span>
+                        <span class="btn-text">Step</span>
+                    </button>
+                    <button class="control-btn" id="generateBtn" aria-label="Generate new data">
+                        <span class="btn-icon">🎲</span>
+                        <span class="btn-text">New Data</span>
+                    </button>
+                </div>
+                <div class="control-group">
+                    <div class="slider-control">
+                        <label for="speedSlider">Speed</label>
+                        <input type="range" id="speedSlider" min="50" max="2000" value="500" step="50">
+                        <span class="slider-value" id="speedValue">Medium</span>
+                    </div>
+                    <div class="slider-control">
+                        <label for="sizeSlider">Size</label>
+                        <input type="range" id="sizeSlider" min="10" max="100" value="50" step="5">
+                        <span class="slider-value" id="sizeValue">50</span>
+                    </div>
+                    <div class="slider-control search-target-control hidden" id="searchTargetControl">
+                        <label for="searchTarget">Target</label>
+                        <input type="number" id="searchTarget" placeholder="Enter value" min="1" max="100">
+                        <button class="btn-small" id="randomTargetBtn" title="Random target">🎲</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Graph Controls -->
+            <div class="graph-controls" id="graphControls" style="display:none">
+                <div class="control-group">
+                    <button class="control-btn" id="generateGraphBtn" aria-label="Generate graph">
+                        <span class="btn-icon">🔄</span>
+                        <span class="btn-text">Generate Graph</span>
+                    </button>
+                    <button class="control-btn" id="clearGraphBtn" aria-label="Clear graph">
+                        <span class="btn-icon">🗑️</span>
+                        <span class="btn-text">Clear Graph</span>
+                    </button>
+                </div>
+                <div class="control-group">
+                    <div class="slider-control">
+                        <label for="nodeCount">Nodes</label>
+                        <input type="number" id="nodeCount" min="5" max="30" value="12">
+                    </div>
+                    <div class="slider-control">
+                        <label for="graphDensity">Density</label>
+                        <input type="range" id="graphDensity" min="0.2" max="0.8" step="0.1" value="0.4">
+                        <span class="slider-value" id="densityValue">0.4</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <button class="control-btn mode-btn" id="selectStartBtn" aria-label="Select start node">
+                        <span class="btn-icon">📍</span>
+                        <span class="btn-text">Select Start</span>
+                    </button>
+                    <button class="control-btn mode-btn" id="selectTargetBtn" aria-label="Select target node">
+                        <span class="btn-icon">🎯</span>
+                        <span class="btn-text">Select Target</span>
+                    </button>
+                </div>
+                <div class="selected-nodes-display">
+                    <span id="selectedNodes">Start: None | Target: None</span>
+                </div>
+            </div>
+        </main>
+
+        <!-- Educational Panel -->
+        <aside class="education-panel" id="educationPanel">
+            <div class="panel-header">
+                <button class="collapse-btn" id="infoPanelCollapseBtn" aria-label="Collapse info panel" title="Collapse info panel">
+                    <span class="collapse-icon">▶</span>
+                </button>
+                <div class="panel-tabs">
+                    <button class="tab-btn active" data-tab="info">Info</button>
+                    <button class="tab-btn" data-tab="code">Code</button>
+                    <button class="tab-btn" data-tab="quiz">Quiz</button>
+                </div>
+            </div>
+
+            <!-- Info Tab -->
+            <div class="tab-content active" id="infoTab">
+                <div class="info-section">
+                    <h3 id="algoName">Select an Algorithm</h3>
+                    <p id="algoDescription">Choose an algorithm from the sidebar to begin learning.</p>
+                </div>
+                <div class="info-section" id="complexitySection">
+                    <h4>Time Complexity</h4>
+                    <ul class="complexity-list">
+                        <li><strong>Best:</strong> <span id="timeBest">-</span></li>
+                        <li><strong>Average:</strong> <span id="timeAverage">-</span></li>
+                        <li><strong>Worst:</strong> <span id="timeWorst">-</span></li>
+                    </ul>
+                    <h4>Space Complexity</h4>
+                    <p id="spaceComplexity">-</p>
+                </div>
+                <div class="info-section" id="propertiesSection">
+                    <h4>Properties</h4>
+                    <ul id="propertiesList"></ul>
+                </div>
+                <div class="info-section" id="useCasesSection">
+                    <h4>When to Use</h4>
+                    <p id="useCases"></p>
+                </div>
+            </div>
+
+            <!-- Code Tab -->
+            <div class="tab-content" id="codeTab">
+                <div class="code-language-tabs">
+                    <button class="lang-tab active" data-lang="javascript">JavaScript</button>
+                    <button class="lang-tab" data-lang="python">Python</button>
+                    <button class="lang-tab" data-lang="java">Java</button>
+                </div>
+                <div class="code-container">
+                    <button class="copy-btn" id="copyCodeBtn">Copy</button>
+                    <pre><code id="codeDisplay" class="language-javascript"></code></pre>
+                </div>
+            </div>
+
+            <!-- Quiz Tab -->
+            <div class="tab-content" id="quizTab">
+                <div class="quiz-container" id="quizContainer">
+                    <div class="quiz-header">
+                        <h3>Test Your Knowledge</h3>
+                        <div class="quiz-progress">
+                            <span id="quizProgress">0/0</span>
+                        </div>
+                    </div>
+                    <div class="quiz-content" id="quizContent">
+                        <p class="quiz-prompt">Select an algorithm to start the quiz</p>
+                    </div>
+                    <div class="quiz-actions hidden" id="quizActions">
+                        <button class="btn-secondary" id="startQuizBtn">Start Quiz</button>
+                        <button class="btn-primary hidden" id="nextQuestionBtn">Next Question</button>
+                        <button class="btn-primary hidden" id="finishQuizBtn">Finish Quiz</button>
+                    </div>
+                    <div class="quiz-results hidden" id="quizResults"></div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Progress Modal -->
+    <div class="modal" id="progressModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Your Progress</h2>
+                <button class="modal-close" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="progress-stats">
+                    <div class="progress-card">
+                        <div class="progress-icon">🎯</div>
+                        <div class="progress-info">
+                            <h3 id="algorithmsLearned">0</h3>
+                            <p>Algorithms Learned</p>
+                        </div>
+                    </div>
+                    <div class="progress-card">
+                        <div class="progress-icon">▶️</div>
+                        <div class="progress-info">
+                            <h3 id="visualizationsRun">0</h3>
+                            <p>Visualizations Run</p>
+                        </div>
+                    </div>
+                    <div class="progress-card">
+                        <div class="progress-icon">✅</div>
+                        <div class="progress-info">
+                            <h3 id="quizzesCompleted">0</h3>
+                            <p>Quizzes Completed</p>
+                        </div>
+                    </div>
+                    <div class="progress-card">
+                        <div class="progress-icon">⭐</div>
+                        <div class="progress-info">
+                            <h3 id="averageScore">0%</h3>
+                            <p>Average Quiz Score</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="achievements-section">
+                    <h3>Achievements</h3>
+                    <div class="achievements-grid" id="achievementsGrid"></div>
+                </div>
+                <button class="btn-danger" id="clearProgressBtn">Clear All Progress</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Challenge Modal -->
+    <div class="modal" id="challengeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Challenge Mode</h2>
+                <button class="modal-close" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="challenge-question" id="challengeQuestion"></div>
+                <div class="challenge-options" id="challengeOptions"></div>
+                <div class="challenge-feedback" id="challengeFeedback"></div>
+                <div class="challenge-score">
+                    <span>Score: <strong id="challengeScore">0</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Tooltip Container -->
+    <div class="tooltip" id="tooltip" role="tooltip"></div>
+
+    <!-- Scripts -->
+    <script>
+        // Inline script to handle welcome screen immediately
+        (function() {
+            console.log('Welcome screen script loaded');
+            
+            function handleGetStarted() {
+                console.log('Get Started button clicked!');
+                const welcomeScreen = document.getElementById('welcomeScreen');
+                const mainApp = document.getElementById('mainApp');
+                
+                if (welcomeScreen && mainApp) {
+                    // Hide welcome screen with animation
+                    welcomeScreen.style.opacity = '0';
+                    welcomeScreen.style.transition = 'opacity 0.5s ease';
+                    
+                    setTimeout(function() {
+                        welcomeScreen.style.display = 'none';
+                        mainApp.style.display = 'grid';
+                        mainApp.classList.add('active');
+                        console.log('Main app activated');
+                    }, 500);
+                }
+            }
+            
+            // Try to attach immediately if DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+            
+            function init() {
+                console.log('Initializing welcome screen...');
+                const getStartedBtn = document.getElementById('getStartedBtn');
+                
+                if (getStartedBtn) {
+                    console.log('Get Started button found!');
+                    
+                    // Add multiple event listeners to ensure it works
+                    getStartedBtn.onclick = handleGetStarted;
+                    getStartedBtn.addEventListener('click', handleGetStarted);
+                    getStartedBtn.addEventListener('touchstart', handleGetStarted);
+                    
+                    // Add visual feedback
+                    getStartedBtn.style.cursor = 'pointer';
+                    getStartedBtn.style.userSelect = 'none';
+                } else {
+                    console.error('Get Started button not found!');
+                }
+            }
+        })();
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>
