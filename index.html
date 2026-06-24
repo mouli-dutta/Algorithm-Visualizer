@@ -138,16 +138,7 @@
 
         <!-- Control Panel Sidebar -->
         <aside class="control-panel-sidebar" id="controlPanelSidebar">
-            <!-- Graph Section (for BFS/DFS) -->
-            <div class="control-section hidden" id="graphSection">
-                <h3 class="section-title">Graph</h3>
-                <button class="control-btn-vertical" id="generateGraphBtn" aria-label="Generate graph">
-                    <span class="btn-icon">🔄</span>
-                    <span class="btn-text">Generate</span>
-                </button>
-            </div>
-            
-            <!-- Maze Section (for Dijkstra/A*) -->
+            <!-- Maze Section (for all graph algorithms) -->
             <div class="control-section hidden" id="mazeSection">
                 <h3 class="section-title">Maze</h3>
                 <button class="control-btn-vertical" id="generateMazeBtn" aria-label="Generate maze">
@@ -161,14 +152,6 @@
                         <option value="small">Small (21x21)</option>
                         <option value="medium" selected>Medium (31x31)</option>
                         <option value="large">Large (41x41)</option>
-                    </select>
-                </div>
-                
-                <div class="param-control">
-                    <label for="mazeAlgorithm">Algorithm</label>
-                    <select id="mazeAlgorithm" class="maze-select">
-                        <option value="recursive" selected>Recursive Backtracking</option>
-                        <option value="random">Random Walls</option>
                     </select>
                 </div>
             </div>
