@@ -1,6 +1,6 @@
 # Algorithm Visualizer
 
-A modern, interactive web application for learning algorithms and data structures through beautiful visualizations.
+A modern, interactive web application for learning algorithms through beautiful visualizations.
 
 ## Features
 
