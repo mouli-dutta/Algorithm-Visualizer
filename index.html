@@ -136,6 +136,157 @@
             </nav>
         </aside>
 
+        <!-- Control Panel Sidebar -->
+        <aside class="control-panel-sidebar" id="controlPanelSidebar">
+            <!-- Graph Section (for BFS/DFS) -->
+            <div class="control-section hidden" id="graphSection">
+                <h3 class="section-title">Graph</h3>
+                <button class="control-btn-vertical" id="generateGraphBtn" aria-label="Generate graph">
+                    <span class="btn-icon">🔄</span>
+                    <span class="btn-text">Generate</span>
+                </button>
+                <button class="control-btn-vertical" id="clearGraphBtn" aria-label="Clear graph">
+                    <span class="btn-icon">🗑️</span>
+                    <span class="btn-text">Clear</span>
+                </button>
+            </div>
+            
+            <!-- Maze Section (for Dijkstra/A*) -->
+            <div class="control-section hidden" id="mazeSection">
+                <h3 class="section-title">Maze</h3>
+                <button class="control-btn-vertical" id="generateMazeBtn" aria-label="Generate maze">
+                    <span class="btn-icon">🛠️</span>
+                    <span class="btn-text">Generate Maze</span>
+                </button>
+                <button class="control-btn-vertical" id="clearMazeBtn" aria-label="Clear maze">
+                    <span class="btn-icon">🗑️</span>
+                    <span class="btn-text">Clear Maze</span>
+                </button>
+                
+                <div class="param-control">
+                    <label for="mazeSize">Size</label>
+                    <select id="mazeSize" class="maze-select">
+                        <option value="small">Small (21x21)</option>
+                        <option value="medium" selected>Medium (31x31)</option>
+                        <option value="large">Large (41x41)</option>
+                    </select>
+                </div>
+                
+                <div class="param-control">
+                    <label for="mazeAlgorithm">Algorithm</label>
+                    <select id="mazeAlgorithm" class="maze-select">
+                        <option value="recursive" selected>Recursive Backtracking</option>
+                        <option value="random">Random Walls</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Parameters Section -->
+            <div class="control-section">
+                <h3 class="section-title">Parameters</h3>
+                
+                <!-- Speed (always visible) -->
+                <div class="param-control">
+                    <label for="speedSlider">Speed</label>
+                    <input type="range" id="speedSlider" min="50" max="2000" value="500" step="50" title="Speed: 50ms (Fast) to 2000ms (Slow)">
+                    <span class="slider-value" id="speedValue">Medium</span>
+                </div>
+                
+                <!-- Size (for sorting/searching) -->
+                <div class="param-control" id="sizeControl">
+                    <label for="sizeSlider">Size</label>
+                    <input type="range" id="sizeSlider" min="10" max="100" value="50" step="5" title="Array size: 10 to 100 elements">
+                    <span class="slider-value" id="sizeValue">50</span>
+                </div>
+                
+                <!-- Search Target (for searching only) -->
+                <div class="param-control hidden" id="searchTargetControl">
+                    <label for="searchTarget">Target</label>
+                    <div class="input-with-button">
+                        <input type="number" id="searchTarget" placeholder="1-100" min="1" max="100" step="1" title="Target value: 1 to 100" required>
+                        <button class="btn-small" id="randomTargetBtn" title="Random target">🎲</button>
+                    </div>
+                </div>
+                
+                <!-- Node Count (for graphs only) -->
+                <div class="param-control hidden" id="nodeCountControl">
+                    <label for="nodeCount">Nodes</label>
+                    <input type="number" id="nodeCount" min="5" max="30" value="12" step="1" title="Number of nodes: 5 to 30" required>
+                </div>
+                
+                <!-- Density (for graphs only) -->
+                <div class="param-control hidden" id="densityControl">
+                    <label for="graphDensity">Density</label>
+                    <input type="range" id="graphDensity" min="0.2" max="0.8" step="0.1" value="0.4" title="Edge density: 0.2 (Sparse) to 0.8 (Dense)">
+                    <span class="slider-value" id="densityValue">0.4</span>
+                </div>
+            </div>
+            
+            <!-- Graph Node Selection (for BFS/DFS) -->
+            <div class="control-section hidden" id="nodeSelectionSection">
+                <h3 class="section-title">Node Selection</h3>
+                <button class="control-btn-vertical mode-btn" id="selectStartBtn" aria-label="Select start node">
+                    <span class="btn-icon">📍</span>
+                    <span class="btn-text">Select Start</span>
+                </button>
+                <button class="control-btn-vertical mode-btn" id="selectTargetBtn" aria-label="Select target node">
+                    <span class="btn-icon">🎯</span>
+                    <span class="btn-text">Select Target</span>
+                </button>
+                <div class="selected-display" id="selectedNodes">
+                    Start: None | Target: None
+                </div>
+            </div>
+            
+            <!-- Maze Cell Selection (for Dijkstra/A*) -->
+            <div class="control-section hidden" id="mazeCellSelection">
+                <h3 class="section-title">Cell Selection</h3>
+                <button class="control-btn-vertical mode-btn" id="selectMazeStartBtn" aria-label="Select start cell">
+                    <span class="btn-icon">📍</span>
+                    <span class="btn-text">Select Start</span>
+                </button>
+                <button class="control-btn-vertical mode-btn" id="selectMazeTargetBtn" aria-label="Select target cell">
+                    <span class="btn-icon">🎯</span>
+                    <span class="btn-text">Select Target</span>
+                </button>
+                <div class="selected-display" id="selectedCells">
+                    Start: None | Target: None
+                </div>
+            </div>
+            
+            <!-- Playback Section -->
+            <div class="control-section">
+                <h3 class="section-title">Playback</h3>
+                <div class="control-buttons-vertical">
+                    <button class="control-btn-vertical" id="playBtn" aria-label="Play animation">
+                        <span class="btn-icon">▶️</span>
+                        <span class="btn-text">Play</span>
+                    </button>
+                    <button class="control-btn-vertical" id="pauseBtn" aria-label="Pause animation" disabled>
+                        <span class="btn-icon">⏸️</span>
+                        <span class="btn-text">Pause</span>
+                    </button>
+                    <button class="control-btn-vertical" id="resetBtn" aria-label="Reset visualization">
+                        <span class="btn-icon">🔄</span>
+                        <span class="btn-text">Reset</span>
+                    </button>
+                    <button class="control-btn-vertical" id="stepBtn" aria-label="Step forward">
+                        <span class="btn-icon">⏭️</span>
+                        <span class="btn-text">Step</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Data Section (for sorting/searching) -->
+            <div class="control-section" id="dataSection">
+                <h3 class="section-title">Data</h3>
+                <button class="control-btn-vertical" id="generateBtn" aria-label="Generate new data">
+                    <span class="btn-icon">🎲</span>
+                    <span class="btn-text">New Data</span>
+                </button>
+            </div>
+        </aside>
+
         <!-- Main Content Area -->
         <main class="main-content">
             <!-- Statistics Panel -->
@@ -163,92 +314,12 @@
                 <div class="canvas-wrapper">
                     <canvas id="visualizationCanvas" aria-label="Algorithm visualization canvas"></canvas>
                     <div id="graphContainer" class="graph-container hidden"></div>
+                    <div id="mazeContainer" class="maze-container hidden"></div>
                     <div id="dsContainer" class="ds-container hidden"></div>
                 </div>
                 <div class="execution-log" id="executionLog">
                     <div class="log-header">Execution Log</div>
                     <div class="log-content" id="logContent"></div>
-                </div>
-            </div>
-
-            <!-- Control Panel -->
-            <div class="control-panel">
-                <div class="control-group">
-                    <button class="control-btn" id="playBtn" aria-label="Play animation">
-                        <span class="btn-icon">▶️</span>
-                        <span class="btn-text">Play</span>
-                    </button>
-                    <button class="control-btn" id="pauseBtn" aria-label="Pause animation" disabled>
-                        <span class="btn-icon">⏸️</span>
-                        <span class="btn-text">Pause</span>
-                    </button>
-                    <button class="control-btn" id="resetBtn" aria-label="Reset visualization">
-                        <span class="btn-icon">🔄</span>
-                        <span class="btn-text">Reset</span>
-                    </button>
-                    <button class="control-btn" id="stepBtn" aria-label="Step forward">
-                        <span class="btn-icon">⏭️</span>
-                        <span class="btn-text">Step</span>
-                    </button>
-                    <button class="control-btn" id="generateBtn" aria-label="Generate new data">
-                        <span class="btn-icon">🎲</span>
-                        <span class="btn-text">New Data</span>
-                    </button>
-                </div>
-                <div class="control-group">
-                    <div class="slider-control">
-                        <label for="speedSlider">Speed</label>
-                        <input type="range" id="speedSlider" min="50" max="2000" value="500" step="50">
-                        <span class="slider-value" id="speedValue">Medium</span>
-                    </div>
-                    <div class="slider-control">
-                        <label for="sizeSlider">Size</label>
-                        <input type="range" id="sizeSlider" min="10" max="100" value="50" step="5">
-                        <span class="slider-value" id="sizeValue">50</span>
-                    </div>
-                    <div class="slider-control search-target-control hidden" id="searchTargetControl">
-                        <label for="searchTarget">Target</label>
-                        <input type="number" id="searchTarget" placeholder="Enter value" min="1" max="100">
-                        <button class="btn-small" id="randomTargetBtn" title="Random target">🎲</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Graph Controls -->
-            <div class="graph-controls" id="graphControls" style="display:none">
-                <div class="control-group">
-                    <button class="control-btn" id="generateGraphBtn" aria-label="Generate graph">
-                        <span class="btn-icon">🔄</span>
-                        <span class="btn-text">Generate Graph</span>
-                    </button>
-                    <button class="control-btn" id="clearGraphBtn" aria-label="Clear graph">
-                        <span class="btn-icon">🗑️</span>
-                        <span class="btn-text">Clear Graph</span>
-                    </button>
-                </div>
-                <div class="control-group">
-                    <div class="slider-control">
-                        <label for="nodeCount">Nodes</label>
-                        <input type="number" id="nodeCount" min="5" max="30" value="12">
-                    </div>
-                    <div class="slider-control">
-                        <label for="graphDensity">Density</label>
-                        <input type="range" id="graphDensity" min="0.2" max="0.8" step="0.1" value="0.4">
-                        <span class="slider-value" id="densityValue">0.4</span>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <button class="control-btn mode-btn" id="selectStartBtn" aria-label="Select start node">
-                        <span class="btn-icon">📍</span>
-                        <span class="btn-text">Select Start</span>
-                    </button>
-                    <button class="control-btn mode-btn" id="selectTargetBtn" aria-label="Select target node">
-                        <span class="btn-icon">🎯</span>
-                        <span class="btn-text">Select Target</span>
-                    </button>
-                </div>
-                <div class="selected-nodes-display">
-                    <span id="selectedNodes">Start: None | Target: None</span>
                 </div>
             </div>
         </main>

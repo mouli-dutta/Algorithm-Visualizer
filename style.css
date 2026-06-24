@@ -294,10 +294,10 @@ body {
 .main-app.active {
     display: grid;
     grid-template-areas:
-        "header header header"
-        "sidebar main education"
-        "sidebar main education";
-    grid-template-columns: 280px 1fr 350px;
+        "header header header header"
+        "sidebar controls main education"
+        "sidebar controls main education";
+    grid-template-columns: 280px 250px 1fr 350px;
     grid-template-rows: auto 1fr;
     height: 100vh;
     transition: grid-template-columns 300ms ease;
@@ -305,17 +305,17 @@ body {
 
 /* Adjust grid when sidebar is collapsed */
 .main-app.active:has(.sidebar.collapsed) {
-    grid-template-columns: 50px 1fr 350px;
+    grid-template-columns: 50px 250px 1fr 350px;
 }
 
 /* Adjust grid when info panel is collapsed */
 .main-app.active:has(.education-panel.collapsed) {
-    grid-template-columns: 280px 1fr 50px;
+    grid-template-columns: 280px 250px 1fr 50px;
 }
 
 /* Adjust grid when both are collapsed */
 .main-app.active:has(.sidebar.collapsed):has(.education-panel.collapsed) {
-    grid-template-columns: 50px 1fr 50px;
+    grid-template-columns: 50px 250px 1fr 50px;
 }
 
 @keyframes fadeIn {
@@ -417,6 +417,169 @@ body {
 
 .sidebar.collapsed .collapse-btn {
     margin: 0 auto;
+}
+
+/* ===== Control Panel Sidebar ===== */
+.control-panel-sidebar {
+    grid-area: controls;
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    overflow-y: auto;
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.control-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.section-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-xs);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.control-buttons-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.control-btn-vertical {
+    width: 100%;
+    padding: var(--spacing-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.control-btn-vertical:hover:not(:disabled) {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.control-btn-vertical:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.control-btn-vertical:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.control-btn-vertical .btn-icon {
+    font-size: 1.2rem;
+}
+
+.param-control {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.param-control label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.param-control input[type="range"] {
+    width: 100%;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: var(--bg-tertiary);
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.param-control input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+}
+
+.param-control input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+    border: none;
+}
+
+.param-control input[type="number"] {
+    padding: var(--spacing-sm);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+
+.param-control .slider-value {
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    text-align: center;
+}
+
+.input-with-button {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.input-with-button input {
+    flex: 1;
+}
+
+.input-with-button .btn-small {
+    padding: var(--spacing-sm);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    font-size: 1rem;
+}
+
+.input-with-button .btn-small:hover {
+    background: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.selected-display {
+    padding: var(--spacing-md);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    text-align: center;
+    color: var(--text-primary);
+    font-weight: 500;
+    border: 1px solid var(--border-color);
 }
 
 .sidebar-header h2 {
@@ -1398,14 +1561,19 @@ body {
 }
 
 /* ===== Graph Visualization ===== */
-.graph-container {
+.graph-container,
+.maze-container {
     width: 100%;
     height: 100%;
     min-height: 400px;
     background: var(--bg-tertiary);
     border-radius: var(--radius-lg);
-    overflow: hidden;
+    overflow: auto;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
 }
 
 #graphSvg {
@@ -1418,8 +1586,9 @@ body {
 /* Graph Nodes */
 .node {
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: filter 0.3s ease;
     stroke-width: 2;
+    transform-origin: center;
 }
 
 .node-default {
@@ -1430,11 +1599,17 @@ body {
 .node-start {
     fill: #10b981;
     stroke: #059669;
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6));
+    animation: nodeSelected 0.3s ease-out;
 }
 
 .node-target {
     fill: #ef4444;
     stroke: #dc2626;
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.6));
+    animation: nodeSelected 0.3s ease-out;
 }
 
 .node-visiting {
@@ -1455,8 +1630,8 @@ body {
 }
 
 .node:hover {
-    transform: scale(1.1);
     filter: brightness(1.2);
+    cursor: pointer;
 }
 
 /* Node Labels */
@@ -1465,8 +1640,9 @@ body {
     font-size: 14px;
     font-weight: bold;
     text-anchor: middle;
-    pointer-events: none;
+    cursor: pointer;
     user-select: none;
+    transform-origin: center;
 }
 
 /* Graph Edges */
@@ -1564,6 +1740,83 @@ body {
 @keyframes glow {
     0%, 100% { filter: brightness(1); }
     50% { filter: brightness(1.5); }
+}
+
+@keyframes nodeSelected {
+    0% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 0px transparent);
+    }
+    50% {
+        transform: scale(1.25);
+    }
+    100% {
+        transform: scale(1.15);
+    }
+}
+
+/* ===== Maze Visualization ===== */
+.maze-grid {
+    display: grid;
+    gap: 1px;
+    background: var(--border-color);
+    border: 2px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+}
+
+.maze-cell {
+    width: 20px;
+    height: 20px;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.maze-cell.wall {
+    background: #2d3748;
+}
+
+.maze-cell.path {
+    background: #f7fafc;
+}
+
+.maze-cell.start {
+    background: #10b981;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+}
+
+.maze-cell.target {
+    background: #ef4444;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+}
+
+.maze-cell.visiting {
+    background: #fbbf24;
+    animation: pulse 0.5s ease-in-out;
+}
+
+.maze-cell.visited {
+    background: #3b82f6;
+}
+
+.maze-cell.path-final {
+    background: #8b5cf6;
+    animation: glow 1s ease-in-out infinite;
+}
+
+.maze-select {
+    width: 100%;
+    padding: var(--spacing-sm);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.maze-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
 }
 
 /* ===== Responsive Design ===== */
