@@ -7,8 +7,8 @@ A modern, interactive web application for learning algorithms and data structure
 ### 🎯 Comprehensive Algorithm Coverage
 - **Sorting Algorithms**: Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Quick Sort, Heap Sort
 - **Searching Algorithms**: Linear Search, Binary Search, Jump Search
-- **Graph Algorithms**: BFS, DFS, Dijkstra's Algorithm, A* Pathfinding (Coming Soon)
-- **Data Structures**: Stack, Queue, Linked List, Binary Search Tree (Coming Soon)
+- **Graph Algorithms**: BFS, DFS, Dijkstra's Algorithm, A* Pathfinding
+- **Data Structures**: Stack, Queue, Linked List, Binary Search Tree
 
 ### 🎨 Modern UI/UX
 - Glassmorphism-inspired design
@@ -26,8 +26,8 @@ A modern, interactive web application for learning algorithms and data structure
 
 ### 🎓 Educational Features
 - Algorithm descriptions and complexity analysis
-- Code examples in JavaScript, Python, and Java (Coming Soon)
-- Interactive quizzes (Coming Soon)
+- Code examples in JavaScript, Python, and Java 
+- Interactive quizzes 
 - Challenge mode (Coming Soon)
 - Progress tracking with achievements
 
