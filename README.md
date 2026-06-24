@@ -8,7 +8,6 @@ A modern, interactive web application for learning algorithms through beautiful 
 - **Sorting Algorithms**: Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Quick Sort, Heap Sort
 - **Searching Algorithms**: Linear Search, Binary Search, Jump Search
 - **Graph Algorithms**: BFS, DFS, Dijkstra's Algorithm, A* Pathfinding
-- **Data Structures**: Stack, Queue, Linked List, Binary Search Tree
 
 ### 🎨 Modern UI/UX
 - Glassmorphism-inspired design
