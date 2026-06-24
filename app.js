@@ -46,6 +46,1074 @@ const CONFIG = {
     },
 };
 
+// ===== Algorithm Code Examples =====
+const algorithmCode = {
+    bubbleSort: {
+        javascript: `function bubbleSort(arr) {
+    const n = arr.length;
+    // Outer loop for each pass
+    for (let i = 0; i < n - 1; i++) {
+        let swapped = false;
+        // Inner loop for comparisons
+        for (let j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                // Swap elements
+                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+                swapped = true;
+            }
+        }
+        // Optimization: stop if no swaps occurred
+        if (!swapped) break;
+    }
+    return arr;
+}`,
+        python: `def bubble_sort(arr):
+    n = len(arr)
+    # Outer loop for each pass
+    for i in range(n - 1):
+        swapped = False
+        # Inner loop for comparisons
+        for j in range(n - i - 1):
+            if arr[j] > arr[j + 1]:
+                # Swap elements
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+        # Optimization: stop if no swaps occurred
+        if not swapped:
+            break
+    return arr`,
+        java: `public static void bubbleSort(int[] arr) {
+    int n = arr.length;
+    // Outer loop for each pass
+    for (int i = 0; i < n - 1; i++) {
+        boolean swapped = false;
+        // Inner loop for comparisons
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                // Swap elements
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+                swapped = true;
+            }
+        }
+        // Optimization: stop if no swaps occurred
+        if (!swapped) break;
+    }
+}`
+    },
+    selectionSort: {
+        javascript: `function selectionSort(arr) {
+    const n = arr.length;
+    for (let i = 0; i < n - 1; i++) {
+        // Find minimum element in unsorted portion
+        let minIdx = i;
+        for (let j = i + 1; j < n; j++) {
+            if (arr[j] < arr[minIdx]) {
+                minIdx = j;
+            }
+        }
+        // Swap minimum with first unsorted element
+        if (minIdx !== i) {
+            [arr[i], arr[minIdx]] = [arr[minIdx], arr[i]];
+        }
+    }
+    return arr;
+}`,
+        python: `def selection_sort(arr):
+    n = len(arr)
+    for i in range(n - 1):
+        # Find minimum element in unsorted portion
+        min_idx = i
+        for j in range(i + 1, n):
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+        # Swap minimum with first unsorted element
+        if min_idx != i:
+            arr[i], arr[min_idx] = arr[min_idx], arr[i]
+    return arr`,
+        java: `public static void selectionSort(int[] arr) {
+    int n = arr.length;
+    for (int i = 0; i < n - 1; i++) {
+        // Find minimum element in unsorted portion
+        int minIdx = i;
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] < arr[minIdx]) {
+                minIdx = j;
+            }
+        }
+        // Swap minimum with first unsorted element
+        if (minIdx != i) {
+            int temp = arr[i];
+            arr[i] = arr[minIdx];
+            arr[minIdx] = temp;
+        }
+    }
+}`
+    },
+    insertionSort: {
+        javascript: `function insertionSort(arr) {
+    const n = arr.length;
+    for (let i = 1; i < n; i++) {
+        let key = arr[i];
+        let j = i - 1;
+        // Move elements greater than key one position ahead
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+    return arr;
+}`,
+        python: `def insertion_sort(arr):
+    n = len(arr)
+    for i in range(1, n):
+        key = arr[i]
+        j = i - 1
+        # Move elements greater than key one position ahead
+        while j >= 0 and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+    return arr`,
+        java: `public static void insertionSort(int[] arr) {
+    int n = arr.length;
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+        // Move elements greater than key one position ahead
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+}`
+    },
+    mergeSort: {
+        javascript: `function mergeSort(arr) {
+    if (arr.length <= 1) return arr;
+    
+    const mid = Math.floor(arr.length / 2);
+    const left = mergeSort(arr.slice(0, mid));
+    const right = mergeSort(arr.slice(mid));
+    
+    return merge(left, right);
+}
+
+function merge(left, right) {
+    const result = [];
+    let i = 0, j = 0;
+    
+    while (i < left.length && j < right.length) {
+        if (left[i] <= right[j]) {
+            result.push(left[i++]);
+        } else {
+            result.push(right[j++]);
+        }
+    }
+    
+    return result.concat(left.slice(i)).concat(right.slice(j));
+}`,
+        python: `def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    
+    return merge(left, right)
+
+def merge(left, right):
+    result = []
+    i = j = 0
+    
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result`,
+        java: `public static void mergeSort(int[] arr, int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+        merge(arr, left, mid, right);
+    }
+}
+
+private static void merge(int[] arr, int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+    
+    int[] L = new int[n1];
+    int[] R = new int[n2];
+    
+    System.arraycopy(arr, left, L, 0, n1);
+    System.arraycopy(arr, mid + 1, R, 0, n2);
+    
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k++] = L[i++];
+        } else {
+            arr[k++] = R[j++];
+        }
+    }
+    
+    while (i < n1) arr[k++] = L[i++];
+    while (j < n2) arr[k++] = R[j++];
+}`
+    },
+    quickSort: {
+        javascript: `function quickSort(arr, low = 0, high = arr.length - 1) {
+    if (low < high) {
+        const pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+    return arr;
+}
+
+function partition(arr, low, high) {
+    const pivot = arr[high];
+    let i = low - 1;
+    
+    for (let j = low; j < high; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+    }
+    [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
+    return i + 1;
+}`,
+        python: `def quick_sort(arr, low=0, high=None):
+    if high is None:
+        high = len(arr) - 1
+    
+    if low < high:
+        pi = partition(arr, low, high)
+        quick_sort(arr, low, pi - 1)
+        quick_sort(arr, pi + 1, high)
+    return arr
+
+def partition(arr, low, high):
+    pivot = arr[high]
+    i = low - 1
+    
+    for j in range(low, high):
+        if arr[j] < pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+    
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    return i + 1`,
+        java: `public static void quickSort(int[] arr, int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+private static int partition(int[] arr, int low, int high) {
+    int pivot = arr[high];
+    int i = low - 1;
+    
+    for (int j = low; j < high; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+    
+    int temp = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = temp;
+    return i + 1;
+}`
+    },
+    heapSort: {
+        javascript: `function heapSort(arr) {
+    const n = arr.length;
+    
+    // Build max heap
+    for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {
+        heapify(arr, n, i);
+    }
+    
+    // Extract elements from heap one by one
+    for (let i = n - 1; i > 0; i--) {
+        [arr[0], arr[i]] = [arr[i], arr[0]];
+        heapify(arr, i, 0);
+    }
+    return arr;
+}
+
+function heapify(arr, n, i) {
+    let largest = i;
+    const left = 2 * i + 1;
+    const right = 2 * i + 2;
+    
+    if (left < n && arr[left] > arr[largest]) largest = left;
+    if (right < n && arr[right] > arr[largest]) largest = right;
+    
+    if (largest !== i) {
+        [arr[i], arr[largest]] = [arr[largest], arr[i]];
+        heapify(arr, n, largest);
+    }
+}`,
+        python: `def heap_sort(arr):
+    n = len(arr)
+    
+    # Build max heap
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+    
+    # Extract elements from heap one by one
+    for i in range(n - 1, 0, -1):
+        arr[0], arr[i] = arr[i], arr[0]
+        heapify(arr, i, 0)
+    return arr
+
+def heapify(arr, n, i):
+    largest = i
+    left = 2 * i + 1
+    right = 2 * i + 2
+    
+    if left < n and arr[left] > arr[largest]:
+        largest = left
+    if right < n and arr[right] > arr[largest]:
+        largest = right
+    
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)`,
+        java: `public static void heapSort(int[] arr) {
+    int n = arr.length;
+    
+    // Build max heap
+    for (int i = n / 2 - 1; i >= 0; i--) {
+        heapify(arr, n, i);
+    }
+    
+    // Extract elements from heap one by one
+    for (int i = n - 1; i > 0; i--) {
+        int temp = arr[0];
+        arr[0] = arr[i];
+        arr[i] = temp;
+        heapify(arr, i, 0);
+    }
+}
+
+private static void heapify(int[] arr, int n, int i) {
+    int largest = i;
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
+    
+    if (left < n && arr[left] > arr[largest]) largest = left;
+    if (right < n && arr[right] > arr[largest]) largest = right;
+    
+    if (largest != i) {
+        int temp = arr[i];
+        arr[i] = arr[largest];
+        arr[largest] = temp;
+        heapify(arr, n, largest);
+    }
+}`
+    },
+    linearSearch: {
+        javascript: `function linearSearch(arr, target) {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === target) {
+            return i; // Target found at index i
+        }
+    }
+    return -1; // Target not found
+}`,
+        python: `def linear_search(arr, target):
+    for i in range(len(arr)):
+        if arr[i] == target:
+            return i  # Target found at index i
+    return -1  # Target not found`,
+        java: `public static int linearSearch(int[] arr, int target) {
+    for (int i = 0; i < arr.length; i++) {
+        if (arr[i] == target) {
+            return i; // Target found at index i
+        }
+    }
+    return -1; // Target not found
+}`
+    },
+    binarySearch: {
+        javascript: `function binarySearch(arr, target) {
+    let left = 0;
+    let right = arr.length - 1;
+    
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+        
+        if (arr[mid] === target) {
+            return mid; // Target found
+        } else if (arr[mid] < target) {
+            left = mid + 1; // Search right half
+        } else {
+            right = mid - 1; // Search left half
+        }
+    }
+    return -1; // Target not found
+}`,
+        python: `def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    
+    while left <= right:
+        mid = (left + right) // 2
+        
+        if arr[mid] == target:
+            return mid  # Target found
+        elif arr[mid] < target:
+            left = mid + 1  # Search right half
+        else:
+            right = mid - 1  # Search left half
+    
+    return -1  # Target not found`,
+        java: `public static int binarySearch(int[] arr, int target) {
+    int left = 0;
+    int right = arr.length - 1;
+    
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        
+        if (arr[mid] == target) {
+            return mid; // Target found
+        } else if (arr[mid] < target) {
+            left = mid + 1; // Search right half
+        } else {
+            right = mid - 1; // Search left half
+        }
+    }
+    return -1; // Target not found
+}`
+    },
+    bfs: {
+        javascript: `function bfs(graph, start, target) {
+    const queue = [start];
+    const visited = new Set([start]);
+    const parent = new Map();
+    
+    while (queue.length > 0) {
+        const current = queue.shift();
+        
+        if (current === target) {
+            return reconstructPath(parent, start, target);
+        }
+        
+        for (const neighbor of graph.getNeighbors(current)) {
+            if (!visited.has(neighbor)) {
+                visited.add(neighbor);
+                parent.set(neighbor, current);
+                queue.push(neighbor);
+            }
+        }
+    }
+    return null; // No path found
+}`,
+        python: `from collections import deque
+
+def bfs(graph, start, target):
+    queue = deque([start])
+    visited = {start}
+    parent = {}
+    
+    while queue:
+        current = queue.popleft()
+        
+        if current == target:
+            return reconstruct_path(parent, start, target)
+        
+        for neighbor in graph.get_neighbors(current):
+            if neighbor not in visited:
+                visited.add(neighbor)
+                parent[neighbor] = current
+                queue.append(neighbor)
+    
+    return None  # No path found`,
+        java: `public static List<Integer> bfs(Graph graph, int start, int target) {
+    Queue<Integer> queue = new LinkedList<>();
+    Set<Integer> visited = new HashSet<>();
+    Map<Integer, Integer> parent = new HashMap<>();
+    
+    queue.offer(start);
+    visited.add(start);
+    
+    while (!queue.isEmpty()) {
+        int current = queue.poll();
+        
+        if (current == target) {
+            return reconstructPath(parent, start, target);
+        }
+        
+        for (int neighbor : graph.getNeighbors(current)) {
+            if (!visited.contains(neighbor)) {
+                visited.add(neighbor);
+                parent.put(neighbor, current);
+                queue.offer(neighbor);
+            }
+        }
+    }
+    return null; // No path found
+}`
+    },
+    dfs: {
+        javascript: `function dfs(graph, start, target) {
+    const stack = [start];
+    const visited = new Set();
+    const parent = new Map();
+    
+    while (stack.length > 0) {
+        const current = stack.pop();
+        
+        if (visited.has(current)) continue;
+        visited.add(current);
+        
+        if (current === target) {
+            return reconstructPath(parent, start, target);
+        }
+        
+        for (const neighbor of graph.getNeighbors(current)) {
+            if (!visited.has(neighbor)) {
+                parent.set(neighbor, current);
+                stack.push(neighbor);
+            }
+        }
+    }
+    return null; // No path found
+}`,
+        python: `def dfs(graph, start, target):
+    stack = [start]
+    visited = set()
+    parent = {}
+    
+    while stack:
+        current = stack.pop()
+        
+        if current in visited:
+            continue
+        visited.add(current)
+        
+        if current == target:
+            return reconstruct_path(parent, start, target)
+        
+        for neighbor in graph.get_neighbors(current):
+            if neighbor not in visited:
+                parent[neighbor] = current
+                stack.append(neighbor)
+    
+    return None  # No path found`,
+        java: `public static List<Integer> dfs(Graph graph, int start, int target) {
+    Stack<Integer> stack = new Stack<>();
+    Set<Integer> visited = new HashSet<>();
+    Map<Integer, Integer> parent = new HashMap<>();
+    
+    stack.push(start);
+    
+    while (!stack.isEmpty()) {
+        int current = stack.pop();
+        
+        if (visited.contains(current)) continue;
+        visited.add(current);
+        
+        if (current == target) {
+            return reconstructPath(parent, start, target);
+        }
+        
+        for (int neighbor : graph.getNeighbors(current)) {
+            if (!visited.contains(neighbor)) {
+                parent.put(neighbor, current);
+                stack.push(neighbor);
+            }
+        }
+    }
+    return null; // No path found
+}`
+    },
+    dijkstra: {
+        javascript: `function dijkstra(graph, start, target) {
+    const distances = new Map();
+    const parent = new Map();
+    const visited = new Set();
+    const pq = new PriorityQueue();
+    
+    // Initialize distances
+    for (const node of graph.nodes) {
+        distances.set(node, Infinity);
+    }
+    distances.set(start, 0);
+    pq.enqueue(start, 0);
+    
+    while (!pq.isEmpty()) {
+        const current = pq.dequeue();
+        
+        if (visited.has(current)) continue;
+        visited.add(current);
+        
+        if (current === target) {
+            return reconstructPath(parent, start, target);
+        }
+        
+        for (const neighbor of graph.getNeighbors(current)) {
+            const weight = graph.getWeight(current, neighbor);
+            const newDist = distances.get(current) + weight;
+            
+            if (newDist < distances.get(neighbor)) {
+                distances.set(neighbor, newDist);
+                parent.set(neighbor, current);
+                pq.enqueue(neighbor, newDist);
+            }
+        }
+    }
+    return null;
+}`,
+        python: `import heapq
+
+def dijkstra(graph, start, target):
+    distances = {node: float('inf') for node in graph.nodes}
+    distances[start] = 0
+    parent = {}
+    visited = set()
+    pq = [(0, start)]
+    
+    while pq:
+        current_dist, current = heapq.heappop(pq)
+        
+        if current in visited:
+            continue
+        visited.add(current)
+        
+        if current == target:
+            return reconstruct_path(parent, start, target)
+        
+        for neighbor in graph.get_neighbors(current):
+            weight = graph.get_weight(current, neighbor)
+            new_dist = distances[current] + weight
+            
+            if new_dist < distances[neighbor]:
+                distances[neighbor] = new_dist
+                parent[neighbor] = current
+                heapq.heappush(pq, (new_dist, neighbor))
+    
+    return None`,
+        java: `public static List<Integer> dijkstra(Graph graph, int start, int target) {
+    Map<Integer, Integer> distances = new HashMap<>();
+    Map<Integer, Integer> parent = new HashMap<>();
+    Set<Integer> visited = new HashSet<>();
+    PriorityQueue<Node> pq = new PriorityQueue<>();
+    
+    for (int node : graph.getNodes()) {
+        distances.put(node, Integer.MAX_VALUE);
+    }
+    distances.put(start, 0);
+    pq.offer(new Node(start, 0));
+    
+    while (!pq.isEmpty()) {
+        Node current = pq.poll();
+        
+        if (visited.contains(current.id)) continue;
+        visited.add(current.id);
+        
+        if (current.id == target) {
+            return reconstructPath(parent, start, target);
+        }
+        
+        for (int neighbor : graph.getNeighbors(current.id)) {
+            int weight = graph.getWeight(current.id, neighbor);
+            int newDist = distances.get(current.id) + weight;
+            
+            if (newDist < distances.get(neighbor)) {
+                distances.put(neighbor, newDist);
+                parent.put(neighbor, current.id);
+                pq.offer(new Node(neighbor, newDist));
+            }
+        }
+    }
+    return null;
+}`
+    },
+    aStar: {
+        javascript: `function aStar(graph, start, target) {
+    const gScore = new Map();
+    const fScore = new Map();
+    const parent = new Map();
+    const openSet = new Set([start]);
+    const closedSet = new Set();
+    
+    gScore.set(start, 0);
+    fScore.set(start, heuristic(start, target));
+    
+    while (openSet.size > 0) {
+        const current = getLowestF(openSet, fScore);
+        
+        if (current === target) {
+            return reconstructPath(parent, start, target);
+        }
+        
+        openSet.delete(current);
+        closedSet.add(current);
+        
+        for (const neighbor of graph.getNeighbors(current)) {
+            if (closedSet.has(neighbor)) continue;
+            
+            const tentativeG = gScore.get(current) + 
+                              graph.getWeight(current, neighbor);
+            
+            if (tentativeG < (gScore.get(neighbor) || Infinity)) {
+                parent.set(neighbor, current);
+                gScore.set(neighbor, tentativeG);
+                fScore.set(neighbor, tentativeG + heuristic(neighbor, target));
+                openSet.add(neighbor);
+            }
+        }
+    }
+    return null;
+}`,
+        python: `def a_star(graph, start, target):
+    g_score = {node: float('inf') for node in graph.nodes}
+    g_score[start] = 0
+    f_score = {node: float('inf') for node in graph.nodes}
+    f_score[start] = heuristic(start, target)
+    
+    open_set = {start}
+    closed_set = set()
+    parent = {}
+    
+    while open_set:
+        current = min(open_set, key=lambda x: f_score[x])
+        
+        if current == target:
+            return reconstruct_path(parent, start, target)
+        
+        open_set.remove(current)
+        closed_set.add(current)
+        
+        for neighbor in graph.get_neighbors(current):
+            if neighbor in closed_set:
+                continue
+            
+            tentative_g = g_score[current] + graph.get_weight(current, neighbor)
+            
+            if tentative_g < g_score[neighbor]:
+                parent[neighbor] = current
+                g_score[neighbor] = tentative_g
+                f_score[neighbor] = tentative_g + heuristic(neighbor, target)
+                open_set.add(neighbor)
+    
+    return None`,
+        java: `public static List<Integer> aStar(Graph graph, int start, int target) {
+    Map<Integer, Integer> gScore = new HashMap<>();
+    Map<Integer, Integer> fScore = new HashMap<>();
+    Map<Integer, Integer> parent = new HashMap<>();
+    Set<Integer> openSet = new HashSet<>();
+    Set<Integer> closedSet = new HashSet<>();
+    
+    for (int node : graph.getNodes()) {
+        gScore.put(node, Integer.MAX_VALUE);
+        fScore.put(node, Integer.MAX_VALUE);
+    }
+    
+    gScore.put(start, 0);
+    fScore.put(start, heuristic(start, target));
+    openSet.add(start);
+    
+    while (!openSet.isEmpty()) {
+        int current = getLowestF(openSet, fScore);
+        
+        if (current == target) {
+            return reconstructPath(parent, start, target);
+        }
+        
+        openSet.remove(current);
+        closedSet.add(current);
+        
+        for (int neighbor : graph.getNeighbors(current)) {
+            if (closedSet.contains(neighbor)) continue;
+            
+            int tentativeG = gScore.get(current) + 
+                           graph.getWeight(current, neighbor);
+            
+            if (tentativeG < gScore.get(neighbor)) {
+                parent.put(neighbor, current);
+                gScore.put(neighbor, tentativeG);
+                fScore.put(neighbor, tentativeG + heuristic(neighbor, target));
+                openSet.add(neighbor);
+            }
+        }
+    }
+    return null;
+}`
+    }
+};
+
+// ===== Algorithm Quizzes =====
+const algorithmQuizzes = {
+    bubbleSort: [
+        {
+            question: "What is the worst-case time complexity of Bubble Sort?",
+            options: ["O(n)", "O(n log n)", "O(n²)", "O(2ⁿ)"],
+            correct: 2,
+            explanation: "Bubble Sort has O(n²) worst-case complexity because it uses nested loops to compare all pairs of elements."
+        },
+        {
+            question: "Is Bubble Sort a stable sorting algorithm?",
+            options: ["Yes", "No", "Only for integers", "Depends on implementation"],
+            correct: 0,
+            explanation: "Bubble Sort is stable because equal elements maintain their relative order during swapping."
+        },
+        {
+            question: "What is the best-case time complexity of Bubble Sort with optimization?",
+            options: ["O(1)", "O(n)", "O(n log n)", "O(n²)"],
+            correct: 1,
+            explanation: "Best case is O(n) when the array is already sorted and we use an optimized version with a flag to detect no swaps."
+        },
+        {
+            question: "Is Bubble Sort an in-place sorting algorithm?",
+            options: ["Yes", "No", "Only for small arrays", "Depends on implementation"],
+            correct: 0,
+            explanation: "Bubble Sort is in-place as it only requires O(1) extra space for swapping elements."
+        }
+    ],
+    selectionSort: [
+        {
+            question: "What is the time complexity of Selection Sort in all cases?",
+            options: ["O(n)", "O(n log n)", "O(n²)", "Varies"],
+            correct: 2,
+            explanation: "Selection Sort always has O(n²) complexity regardless of input, as it always scans the entire unsorted portion."
+        },
+        {
+            question: "Is Selection Sort a stable algorithm?",
+            options: ["Yes", "No", "Only for integers", "Depends on implementation"],
+            correct: 1,
+            explanation: "Selection Sort is not stable by default, as it can change the relative order of equal elements during swapping."
+        },
+        {
+            question: "What is the main advantage of Selection Sort?",
+            options: ["Fast execution", "Stable sorting", "Minimum number of swaps", "Low space complexity"],
+            correct: 2,
+            explanation: "Selection Sort minimizes the number of swaps (at most n-1), which is useful when writing to memory is expensive."
+        }
+    ],
+    insertionSort: [
+        {
+            question: "What is the best-case time complexity of Insertion Sort?",
+            options: ["O(1)", "O(n)", "O(n log n)", "O(n²)"],
+            correct: 1,
+            explanation: "Best case is O(n) when the array is already sorted, as each element only needs one comparison."
+        },
+        {
+            question: "Is Insertion Sort adaptive?",
+            options: ["Yes", "No", "Only for small arrays", "Depends on pivot"],
+            correct: 0,
+            explanation: "Insertion Sort is adaptive - it performs better on nearly sorted data, taking advantage of existing order."
+        },
+        {
+            question: "When is Insertion Sort most efficient?",
+            options: ["Large random arrays", "Small or nearly sorted arrays", "Reverse sorted arrays", "All cases equally"],
+            correct: 1,
+            explanation: "Insertion Sort is most efficient for small datasets or nearly sorted data, where it can approach O(n) performance."
+        }
+    ],
+    mergeSort: [
+        {
+            question: "What is the time complexity of Merge Sort in all cases?",
+            options: ["O(n)", "O(n log n)", "O(n²)", "O(2ⁿ)"],
+            correct: 1,
+            explanation: "Merge Sort always has O(n log n) complexity due to its divide-and-conquer approach with balanced splits."
+        },
+        {
+            question: "What is the space complexity of Merge Sort?",
+            options: ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+            correct: 2,
+            explanation: "Merge Sort requires O(n) extra space for the temporary arrays used during merging."
+        },
+        {
+            question: "Is Merge Sort a stable algorithm?",
+            options: ["Yes", "No", "Only for integers", "Depends on implementation"],
+            correct: 0,
+            explanation: "Merge Sort is stable when implemented correctly, preserving the relative order of equal elements."
+        }
+    ],
+    quickSort: [
+        {
+            question: "What is the average-case time complexity of Quick Sort?",
+            options: ["O(n)", "O(n log n)", "O(n²)", "O(2ⁿ)"],
+            correct: 1,
+            explanation: "Quick Sort has O(n log n) average-case complexity with good pivot selection."
+        },
+        {
+            question: "What is the worst-case time complexity of Quick Sort?",
+            options: ["O(n)", "O(n log n)", "O(n²)", "O(2ⁿ)"],
+            correct: 2,
+            explanation: "Worst case is O(n²) when the pivot is consistently the smallest or largest element, creating unbalanced partitions."
+        },
+        {
+            question: "Is Quick Sort stable?",
+            options: ["Yes", "No", "Only with random pivot", "Depends on implementation"],
+            correct: 1,
+            explanation: "Quick Sort is not stable by default, as partitioning can change the relative order of equal elements."
+        }
+    ],
+    heapSort: [
+        {
+            question: "What is the time complexity of Heap Sort?",
+            options: ["O(n)", "O(n log n)", "O(n²)", "O(2ⁿ)"],
+            correct: 1,
+            explanation: "Heap Sort always has O(n log n) complexity for building the heap and extracting elements."
+        },
+        {
+            question: "What is the space complexity of Heap Sort?",
+            options: ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+            correct: 0,
+            explanation: "Heap Sort is in-place with O(1) extra space, making it memory-efficient."
+        },
+        {
+            question: "Is Heap Sort stable?",
+            options: ["Yes", "No", "Only for integers", "Depends on heap type"],
+            correct: 1,
+            explanation: "Heap Sort is not stable as the heapify process can change the relative order of equal elements."
+        }
+    ],
+    linearSearch: [
+        {
+            question: "What is the worst-case time complexity of Linear Search?",
+            options: ["O(1)", "O(log n)", "O(n)", "O(n²)"],
+            correct: 2,
+            explanation: "Worst case is O(n) when the target is at the end or not present, requiring checking all elements."
+        },
+        {
+            question: "Does Linear Search require sorted data?",
+            options: ["Yes", "No", "Only for efficiency", "Depends on implementation"],
+            correct: 1,
+            explanation: "Linear Search works on both sorted and unsorted data, checking each element sequentially."
+        },
+        {
+            question: "What is the best-case time complexity of Linear Search?",
+            options: ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+            correct: 0,
+            explanation: "Best case is O(1) when the target is the first element."
+        }
+    ],
+    binarySearch: [
+        {
+            question: "What is required for Binary Search to work?",
+            options: ["Unsorted array", "Sorted array", "Linked list", "Hash table"],
+            correct: 1,
+            explanation: "Binary Search requires a sorted array to efficiently divide the search space in half."
+        },
+        {
+            question: "What is the time complexity of Binary Search?",
+            options: ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+            correct: 1,
+            explanation: "Binary Search has O(log n) complexity as it halves the search space with each comparison."
+        },
+        {
+            question: "What is the space complexity of iterative Binary Search?",
+            options: ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+            correct: 0,
+            explanation: "Iterative Binary Search uses O(1) space with only a few variables for indices."
+        }
+    ],
+    bfs: [
+        {
+            question: "What data structure does BFS use?",
+            options: ["Stack", "Queue", "Priority Queue", "Hash Table"],
+            correct: 1,
+            explanation: "BFS uses a queue to process nodes in FIFO (First-In-First-Out) order, ensuring level-by-level traversal."
+        },
+        {
+            question: "Does BFS find the shortest path in an unweighted graph?",
+            options: ["Yes", "No", "Only for trees", "Depends on start node"],
+            correct: 0,
+            explanation: "BFS guarantees the shortest path in unweighted graphs by exploring nodes level by level."
+        },
+        {
+            question: "What is the time complexity of BFS?",
+            options: ["O(V)", "O(E)", "O(V + E)", "O(V × E)"],
+            correct: 2,
+            explanation: "BFS has O(V + E) complexity where V is vertices and E is edges, as it visits each vertex and edge once."
+        }
+    ],
+    dfs: [
+        {
+            question: "What data structure does DFS use?",
+            options: ["Stack", "Queue", "Priority Queue", "Hash Table"],
+            correct: 0,
+            explanation: "DFS uses a stack (or recursion) to process nodes in LIFO (Last-In-First-Out) order for depth-first exploration."
+        },
+        {
+            question: "Does DFS guarantee the shortest path?",
+            options: ["Yes", "No", "Only for trees", "Only for weighted graphs"],
+            correct: 1,
+            explanation: "DFS does not guarantee the shortest path as it explores deeply before backtracking."
+        },
+        {
+            question: "What is the space complexity of DFS?",
+            options: ["O(1)", "O(V)", "O(E)", "O(V + E)"],
+            correct: 1,
+            explanation: "DFS has O(V) space complexity for the stack/recursion depth in the worst case."
+        }
+    ],
+    dijkstra: [
+        {
+            question: "Does Dijkstra's algorithm work with negative edge weights?",
+            options: ["Yes", "No", "Only for small negatives", "Depends on graph"],
+            correct: 1,
+            explanation: "Dijkstra's algorithm does not work correctly with negative edge weights as it assumes greedy selection is optimal."
+        },
+        {
+            question: "What data structure is typically used in Dijkstra's algorithm?",
+            options: ["Stack", "Queue", "Priority Queue", "Hash Table"],
+            correct: 2,
+            explanation: "Dijkstra's algorithm uses a priority queue (min-heap) to efficiently select the node with minimum distance."
+        },
+        {
+            question: "What is the time complexity of Dijkstra's algorithm with a binary heap?",
+            options: ["O(V)", "O(E log V)", "O((V + E) log V)", "O(V²)"],
+            correct: 2,
+            explanation: "With a binary heap, Dijkstra's has O((V + E) log V) complexity for processing all vertices and edges."
+        }
+    ],
+    aStar: [
+        {
+            question: "What makes A* different from Dijkstra's algorithm?",
+            options: ["Uses stack", "Uses heuristic", "Works with negative weights", "Faster in all cases"],
+            correct: 1,
+            explanation: "A* uses a heuristic function to estimate distance to the goal, guiding the search more efficiently."
+        },
+        {
+            question: "For A* to be optimal, the heuristic must be:",
+            options: ["Exact", "Admissible", "Random", "Negative"],
+            correct: 1,
+            explanation: "The heuristic must be admissible (never overestimate) for A* to guarantee finding the optimal path."
+        },
+        {
+            question: "What does the f-score in A* represent?",
+            options: ["Distance from start", "Distance to goal", "g + h (total estimated cost)", "Number of nodes"],
+            correct: 2,
+            explanation: "f-score = g-score (actual cost from start) + h-score (heuristic estimate to goal)."
+        }
+    ]
+};
+
 // ===== Graph Class =====
 class Graph {
     constructor() {
@@ -2197,6 +3265,237 @@ const app = {
                 document.getElementById(`${tabName}Tab`).classList.add('active');
             });
         });
+        
+        // Setup code tab
+        this.setupCodeTab();
+        
+        // Setup quiz tab
+        this.setupQuizTab();
+    },
+    
+    setupCodeTab() {
+        // Language switcher
+        document.querySelectorAll('.lang-tab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.dataset.lang;
+                document.querySelectorAll('.lang-tab').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Update code display
+                if (this.currentAlgorithm && algorithmCode[this.currentAlgorithm]) {
+                    const code = algorithmCode[this.currentAlgorithm][lang];
+                    document.getElementById('codeDisplay').textContent = code;
+                    document.getElementById('codeDisplay').className = `language-${lang}`;
+                }
+            });
+        });
+        
+        // Copy button
+        const copyBtn = document.getElementById('copyCodeBtn');
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                const code = document.getElementById('codeDisplay').textContent;
+                navigator.clipboard.writeText(code).then(() => {
+                    notifications.success('Code copied to clipboard!');
+                }).catch(() => {
+                    notifications.error('Failed to copy code');
+                });
+            });
+        }
+    },
+    
+    setupQuizTab() {
+        this.quizState = {
+            currentQuestion: 0,
+            score: 0,
+            answers: [],
+            isActive: false
+        };
+        
+        // Start quiz button
+        const startQuizBtn = document.getElementById('startQuizBtn');
+        if (startQuizBtn) {
+            startQuizBtn.addEventListener('click', () => {
+                this.startQuiz();
+            });
+        }
+        
+        // Next question button
+        const nextQuestionBtn = document.getElementById('nextQuestionBtn');
+        if (nextQuestionBtn) {
+            nextQuestionBtn.addEventListener('click', () => {
+                this.nextQuestion();
+            });
+        }
+        
+        // Finish quiz button
+        const finishQuizBtn = document.getElementById('finishQuizBtn');
+        if (finishQuizBtn) {
+            finishQuizBtn.addEventListener('click', () => {
+                this.finishQuiz();
+            });
+        }
+    },
+    
+    loadCodeExamples(algorithm) {
+        if (!algorithmCode[algorithm]) return;
+        
+        const code = algorithmCode[algorithm];
+        const currentLang = document.querySelector('.lang-tab.active')?.dataset.lang || 'javascript';
+        
+        document.getElementById('codeDisplay').textContent = code[currentLang];
+        document.getElementById('codeDisplay').className = `language-${currentLang}`;
+    },
+    
+    loadQuiz(algorithm) {
+        if (!algorithmQuizzes[algorithm]) {
+            document.getElementById('quizContent').innerHTML = '<p class="quiz-prompt">No quiz available for this algorithm</p>';
+            document.getElementById('quizActions').classList.add('hidden');
+            return;
+        }
+        
+        this.quizState = {
+            currentQuestion: 0,
+            score: 0,
+            answers: [],
+            isActive: false,
+            questions: algorithmQuizzes[algorithm]
+        };
+        
+        document.getElementById('quizContent').innerHTML = '<p class="quiz-prompt">Click "Start Quiz" to begin</p>';
+        document.getElementById('quizActions').classList.remove('hidden');
+        document.getElementById('startQuizBtn').classList.remove('hidden');
+        document.getElementById('nextQuestionBtn').classList.add('hidden');
+        document.getElementById('finishQuizBtn').classList.add('hidden');
+        document.getElementById('quizResults').classList.add('hidden');
+        document.getElementById('quizProgress').textContent = `0/${this.quizState.questions.length}`;
+    },
+    
+    startQuiz() {
+        this.quizState.isActive = true;
+        this.quizState.currentQuestion = 0;
+        this.quizState.score = 0;
+        this.quizState.answers = [];
+        
+        document.getElementById('startQuizBtn').classList.add('hidden');
+        this.showQuestion();
+    },
+    
+    showQuestion() {
+        const question = this.quizState.questions[this.quizState.currentQuestion];
+        const questionNum = this.quizState.currentQuestion + 1;
+        const totalQuestions = this.quizState.questions.length;
+        
+        document.getElementById('quizProgress').textContent = `${questionNum}/${totalQuestions}`;
+        
+        let html = `
+            <div class="quiz-question">
+                <h4>Question ${questionNum}</h4>
+                <p>${question.question}</p>
+                <div class="quiz-options">
+        `;
+        
+        question.options.forEach((option, index) => {
+            html += `
+                <button class="quiz-option" data-index="${index}">
+                    ${option}
+                </button>
+            `;
+        });
+        
+        html += `
+                </div>
+                <div class="quiz-explanation hidden" id="quizExplanation"></div>
+            </div>
+        `;
+        
+        document.getElementById('quizContent').innerHTML = html;
+        
+        // Add click handlers to options
+        document.querySelectorAll('.quiz-option').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                this.selectAnswer(parseInt(e.target.dataset.index));
+            });
+        });
+    },
+    
+    selectAnswer(selectedIndex) {
+        const question = this.quizState.questions[this.quizState.currentQuestion];
+        const isCorrect = selectedIndex === question.correct;
+        
+        // Disable all options
+        document.querySelectorAll('.quiz-option').forEach((btn, index) => {
+            btn.disabled = true;
+            if (index === question.correct) {
+                btn.classList.add('correct');
+            } else if (index === selectedIndex && !isCorrect) {
+                btn.classList.add('incorrect');
+            }
+        });
+        
+        // Show explanation
+        const explanationDiv = document.getElementById('quizExplanation');
+        explanationDiv.innerHTML = `
+            <p><strong>${isCorrect ? '✓ Correct!' : '✗ Incorrect'}</strong></p>
+            <p>${question.explanation}</p>
+        `;
+        explanationDiv.classList.remove('hidden');
+        
+        // Update score
+        if (isCorrect) {
+            this.quizState.score++;
+        }
+        this.quizState.answers.push({ question: this.quizState.currentQuestion, selected: selectedIndex, correct: isCorrect });
+        
+        // Show next/finish button
+        if (this.quizState.currentQuestion < this.quizState.questions.length - 1) {
+            document.getElementById('nextQuestionBtn').classList.remove('hidden');
+        } else {
+            document.getElementById('finishQuizBtn').classList.remove('hidden');
+        }
+    },
+    
+    nextQuestion() {
+        this.quizState.currentQuestion++;
+        document.getElementById('nextQuestionBtn').classList.add('hidden');
+        this.showQuestion();
+    },
+    
+    finishQuiz() {
+        const score = this.quizState.score;
+        const total = this.quizState.questions.length;
+        const percentage = Math.round((score / total) * 100);
+        
+        let message = '';
+        if (percentage >= 80) {
+            message = 'Excellent! 🎉';
+        } else if (percentage >= 60) {
+            message = 'Good job! 👍';
+        } else {
+            message = 'Keep practicing! 📚';
+        }
+        
+        const resultsHtml = `
+            <div class="quiz-final-results">
+                <h3>${message}</h3>
+                <div class="quiz-score">
+                    <div class="score-circle">
+                        <span class="score-number">${percentage}%</span>
+                    </div>
+                    <p>You scored ${score} out of ${total}</p>
+                </div>
+                <button class="btn-primary" id="retakeQuizBtn">Retake Quiz</button>
+            </div>
+        `;
+        
+        document.getElementById('quizContent').innerHTML = resultsHtml;
+        document.getElementById('finishQuizBtn').classList.add('hidden');
+        document.getElementById('quizResults').classList.remove('hidden');
+        
+        // Retake button
+        document.getElementById('retakeQuizBtn')?.addEventListener('click', () => {
+            this.startQuiz();
+        });
     },
     
     setupGraphControls() {
@@ -2242,17 +3541,6 @@ const app = {
                 selectTargetBtn.classList.add('active');
                 document.getElementById('selectStartBtn')?.classList.remove('active');
                 notifications.info('Click a node to set as target');
-            });
-        }
-        
-        // Clear graph button
-        const clearGraphBtn = document.getElementById('clearGraphBtn');
-        if (clearGraphBtn) {
-            clearGraphBtn.addEventListener('click', () => {
-                this.graph.clear();
-                this.graphRenderer.reset();
-                this.graphRenderer.render();
-                notifications.info('Graph cleared');
             });
         }
         
@@ -2304,16 +3592,6 @@ const app = {
                 this.mazeRenderer.render();
                 this.mazeRenderer.updateSelectedDisplay();
                 notifications.success(`Generated ${size} maze (${rows}x${cols})`);
-            });
-        }
-        
-        // Clear maze button
-        const clearMazeBtn = document.getElementById('clearMazeBtn');
-        if (clearMazeBtn) {
-            clearMazeBtn.addEventListener('click', () => {
-                this.maze.clear();
-                this.mazeRenderer.render();
-                notifications.info('Maze cleared');
             });
         }
         
@@ -2682,6 +3960,12 @@ const app = {
             });
         }
         
+        // Load code examples
+        this.loadCodeExamples(algorithm);
+        
+        // Load quiz
+        this.loadQuiz(algorithm);
+        
         notifications.info(`Selected: ${info ? info.name : algorithm}`);
     },
     
@@ -2724,10 +4008,50 @@ const app = {
         statistics.reset();
         this.clearLog();
         
-        // Reset graph visualization if in graph mode
-        if (this.currentCategory === 'graph' && this.graphRenderer) {
-            // Clear all highlighting and re-render the graph
-            this.graphRenderer.render();
+        // Reset based on current algorithm
+        if (this.currentCategory === 'graph') {
+            if (this.currentAlgorithm === 'dijkstra' || this.currentAlgorithm === 'aStar') {
+                // Clear and regenerate maze for Dijkstra/A*
+                if (this.maze && this.mazeRenderer) {
+                    const currentSize = document.getElementById('mazeSize')?.value || 'medium';
+                    const currentAlgorithm = document.getElementById('mazeAlgorithm')?.value || 'recursive';
+                    
+                    let rows, cols;
+                    if (currentSize === 'small') {
+                        rows = cols = 21;
+                    } else if (currentSize === 'large') {
+                        rows = cols = 41;
+                    } else {
+                        rows = cols = 31;
+                    }
+                    
+                    this.maze = new Maze(rows, cols);
+                    this.maze.generateMaze(currentAlgorithm);
+                    this.mazeRenderer.maze = this.maze;
+                    this.mazeRenderer.render();
+                    this.mazeRenderer.updateSelectedDisplay();
+                    notifications.success('Maze reset with new layout');
+                }
+            } else {
+                // Clear and regenerate graph for BFS/DFS
+                if (this.graph && this.graphRenderer) {
+                    this.graph.clear();
+                    const container = document.getElementById('graphContainer');
+                    const width = container ? container.clientWidth : 800;
+                    const height = container ? container.clientHeight : 400;
+                    
+                    let nodeCount = parseInt(document.getElementById('nodeCount')?.value || CONFIG.GRAPH.DEFAULT_NODES);
+                    nodeCount = Math.max(5, Math.min(30, nodeCount));
+                    
+                    let density = parseFloat(document.getElementById('graphDensity')?.value || CONFIG.GRAPH.DEFAULT_DENSITY);
+                    density = Math.max(0.2, Math.min(0.8, density));
+                    
+                    this.graph.generateRandom(nodeCount, density, width, height);
+                    this.graphRenderer.reset();
+                    this.graphRenderer.render();
+                    notifications.success('Graph reset with new layout');
+                }
+            }
         } else if (this.data.length > 0) {
             this.drawArray(this.data);
         }
