@@ -2100,105 +2100,6 @@ function* ternarySearch(array, target) {
 }
 
 // ===== Data Structures =====
-// Note: Data structures work differently - they maintain state and perform operations
-// These are simplified visualizations
-
-function* stackVisualization(operations) {
-    const stack = [];
-    
-    for (const op of operations) {
-        if (op.type === 'push') {
-            stack.push(op.value);
-            yield {
-                type: 'push',
-                indices: [stack.length - 1],
-                data: [...stack],
-                message: `Pushed ${op.value} onto stack. Stack size: ${stack.length}`
-            };
-        } else if (op.type === 'pop') {
-            if (stack.length === 0) {
-                yield {
-                    type: 'error',
-                    indices: [],
-                    data: [...stack],
-                    message: 'Cannot pop from empty stack!'
-                };
-            } else {
-                const value = stack.pop();
-                yield {
-                    type: 'pop',
-                    indices: [stack.length],
-                    data: [...stack],
-                    message: `Popped ${value} from stack. Stack size: ${stack.length}`
-                };
-            }
-        } else if (op.type === 'peek') {
-            if (stack.length === 0) {
-                yield {
-                    type: 'error',
-                    indices: [],
-                    data: [...stack],
-                    message: 'Stack is empty!'
-                };
-            } else {
-                yield {
-                    type: 'peek',
-                    indices: [stack.length - 1],
-                    data: [...stack],
-                    message: `Top element: ${stack[stack.length - 1]}`
-                };
-            }
-        }
-    }
-    
-    yield {
-        type: 'complete',
-        indices: [],
-        data: [...stack],
-        message: 'Stack operations complete!'
-    };
-}
-
-function* queueVisualization(operations) {
-    const queue = [];
-    
-    for (const op of operations) {
-        if (op.type === 'enqueue') {
-            queue.push(op.value);
-            yield {
-                type: 'enqueue',
-                indices: [queue.length - 1],
-                data: [...queue],
-                message: `Enqueued ${op.value}. Queue size: ${queue.length}`
-            };
-        } else if (op.type === 'dequeue') {
-            if (queue.length === 0) {
-                yield {
-                    type: 'error',
-                    indices: [],
-                    data: [...queue],
-                    message: 'Cannot dequeue from empty queue!'
-                };
-            } else {
-                const value = queue.shift();
-                yield {
-                    type: 'dequeue',
-                    indices: [0],
-                    data: [...queue],
-                    message: `Dequeued ${value}. Queue size: ${queue.length}`
-                };
-            }
-        }
-    }
-    
-    yield {
-        type: 'complete',
-        indices: [],
-        data: [...queue],
-        message: 'Queue operations complete!'
-    };
-}
-
 // ===== Graph Algorithms =====
 
 function reconstructPath(parent, start, end) {
@@ -2488,126 +2389,6 @@ function* aStar(graph, startId, targetId) {
 }
 
 // ===== Maze Algorithms =====
-function* bfsMaze(maze) {
-    const start = maze.start;
-    const target = maze.target;
-    
-    if (!start || !target) {
-        yield { type: 'error', message: 'Please select both start and target cells' };
-        return;
-    }
-    
-    const queue = [start];
-    const visited = new Set([`${start.row},${start.col}`]);
-    const parent = new Map();
-    
-    yield { type: 'start', cell: start, message: `🎯 BFS in ${maze.rows}x${maze.cols} maze` };
-    
-    while (queue.length > 0) {
-        const current = queue.shift();
-        const currentKey = `${current.row},${current.col}`;
-        
-        yield { type: 'visiting', cell: current, 
-                message: `Visiting cell (${current.row}, ${current.col})` };
-        
-        if (current.row === target.row && current.col === target.col) {
-            yield { type: 'found', cell: current,
-                    message: `Target found at (${target.row}, ${target.col})!` };
-            
-            // Reconstruct path
-            const path = [];
-            let curr = target;
-            while (curr) {
-                path.unshift(curr);
-                const key = `${curr.row},${curr.col}`;
-                curr = parent.get(key);
-            }
-            
-            yield { type: 'path', cells: path,
-                    message: `Path found: ${path.length} cells` };
-            return;
-        }
-        
-        const neighbors = maze.getNeighbors(current.row, current.col);
-        for (const neighbor of neighbors) {
-            const neighborKey = `${neighbor.row},${neighbor.col}`;
-            if (!visited.has(neighborKey)) {
-                visited.add(neighborKey);
-                parent.set(neighborKey, current);
-                queue.push(neighbor);
-                
-                yield { type: 'explore', from: current, to: neighbor,
-                        message: `Exploring neighbor (${neighbor.row}, ${neighbor.col})` };
-            }
-        }
-        
-        yield { type: 'visited', cell: current };
-    }
-    
-    yield { type: 'not_found', message: 'No path to target' };
-}
-
-function* dfsMaze(maze) {
-    const start = maze.start;
-    const target = maze.target;
-    
-    if (!start || !target) {
-        yield { type: 'error', message: 'Please select both start and target cells' };
-        return;
-    }
-    
-    const stack = [start];
-    const visited = new Set();
-    const parent = new Map();
-    
-    yield { type: 'start', cell: start, message: `🎯 DFS in ${maze.rows}x${maze.cols} maze` };
-    
-    while (stack.length > 0) {
-        const current = stack.pop();
-        const currentKey = `${current.row},${current.col}`;
-        
-        if (visited.has(currentKey)) continue;
-        visited.add(currentKey);
-        
-        yield { type: 'visiting', cell: current,
-                message: `Visiting cell (${current.row}, ${current.col})` };
-        
-        if (current.row === target.row && current.col === target.col) {
-            yield { type: 'found', cell: current,
-                    message: `Target found at (${target.row}, ${target.col})!` };
-            
-            // Reconstruct path
-            const path = [];
-            let curr = target;
-            while (curr) {
-                path.unshift(curr);
-                const key = `${curr.row},${curr.col}`;
-                curr = parent.get(key);
-            }
-            
-            yield { type: 'path', cells: path,
-                    message: `Path found: ${path.length} cells` };
-            return;
-        }
-        
-        const neighbors = maze.getNeighbors(current.row, current.col);
-        for (const neighbor of neighbors) {
-            const neighborKey = `${neighbor.row},${neighbor.col}`;
-            if (!visited.has(neighborKey)) {
-                parent.set(neighborKey, current);
-                stack.push(neighbor);
-                
-                yield { type: 'explore', from: current, to: neighbor,
-                        message: `Exploring neighbor (${neighbor.row}, ${neighbor.col})` };
-            }
-        }
-        
-        yield { type: 'visited', cell: current };
-    }
-    
-    yield { type: 'not_found', message: 'No path to target' };
-}
-
 function* dijkstraMaze(maze) {
     const start = maze.start;
     const target = maze.target;
@@ -3732,28 +3513,56 @@ const app = {
         const mazeCellSelection = document.getElementById('mazeCellSelection');
         
         if (category === 'graph') {
-            // All graph algorithms use maze now
-            if (canvas) canvas.style.display = 'none';
-            if (graphContainer) graphContainer.classList.add('hidden');
-            if (mazeContainer) mazeContainer.classList.remove('hidden');
-            if (dsContainer) dsContainer.classList.add('hidden');
-            
-            // Show maze controls
-            dataSection?.classList.add('hidden');
-            graphSection?.classList.add('hidden');
-            mazeSection?.classList.remove('hidden');
-            sizeControl?.classList.add('hidden');
-            searchTargetControl?.classList.add('hidden');
-            nodeCountControl?.classList.add('hidden');
-            densityControl?.classList.add('hidden');
-            nodeSelectionSection?.classList.add('hidden');
-            mazeCellSelection?.classList.remove('hidden');
-            
-            // Generate initial maze if empty
-            if (this.maze.grid.length === 0) {
-                this.maze.generateMaze('recursive');
-                this.mazeRenderer.render();
-                this.mazeRenderer.updateSelectedDisplay();
+            // Check if Dijkstra or A* (use maze), or BFS/DFS (use graph)
+            if (algorithm === 'dijkstra' || algorithm === 'aStar') {
+                // Show maze for Dijkstra and A*
+                if (canvas) canvas.style.display = 'none';
+                if (graphContainer) graphContainer.classList.add('hidden');
+                if (mazeContainer) mazeContainer.classList.remove('hidden');
+                if (dsContainer) dsContainer.classList.add('hidden');
+                
+                // Show maze controls
+                dataSection?.classList.add('hidden');
+                graphSection?.classList.add('hidden');
+                mazeSection?.classList.remove('hidden');
+                sizeControl?.classList.add('hidden');
+                searchTargetControl?.classList.add('hidden');
+                nodeCountControl?.classList.add('hidden');
+                densityControl?.classList.add('hidden');
+                nodeSelectionSection?.classList.add('hidden');
+                mazeCellSelection?.classList.remove('hidden');
+                
+                // Generate initial maze if empty
+                if (this.maze.grid.length === 0) {
+                    this.maze.generateMaze();
+                    this.mazeRenderer.render();
+                    this.mazeRenderer.updateSelectedDisplay();
+                }
+            } else {
+                // Show graph for BFS and DFS
+                if (canvas) canvas.style.display = 'none';
+                if (graphContainer) graphContainer.classList.remove('hidden');
+                if (mazeContainer) mazeContainer.classList.add('hidden');
+                if (dsContainer) dsContainer.classList.add('hidden');
+                
+                // Show graph controls
+                dataSection?.classList.add('hidden');
+                graphSection?.classList.remove('hidden');
+                mazeSection?.classList.add('hidden');
+                sizeControl?.classList.add('hidden');
+                searchTargetControl?.classList.add('hidden');
+                nodeCountControl?.classList.remove('hidden');
+                densityControl?.classList.remove('hidden');
+                nodeSelectionSection?.classList.remove('hidden');
+                mazeCellSelection?.classList.add('hidden');
+                
+                // Generate initial graph if empty
+                if (this.graph.nodes.size === 0) {
+                    const width = graphContainer ? graphContainer.clientWidth : 800;
+                    const height = graphContainer ? graphContainer.clientHeight : 400;
+                    this.graph.generateRandom(CONFIG.GRAPH.DEFAULT_NODES, CONFIG.GRAPH.DEFAULT_DENSITY, width, height);
+                    this.graphRenderer.render();
+                }
             }
         } else if (category === 'searching') {
             // Show canvas, hide graph, maze and ds
@@ -4071,25 +3880,46 @@ const app = {
         
         // Reset based on current algorithm
         if (this.currentCategory === 'graph') {
-            // All graph algorithms use maze now
-            if (this.maze && this.mazeRenderer) {
-                const currentSize = document.getElementById('mazeSize')?.value || 'medium';
-                
-                let rows, cols;
-                if (currentSize === 'small') {
-                    rows = cols = 21;
-                } else if (currentSize === 'large') {
-                    rows = cols = 41;
-                } else {
-                    rows = cols = 31;
+            if (this.currentAlgorithm === 'dijkstra' || this.currentAlgorithm === 'aStar') {
+                // Clear and regenerate maze for Dijkstra/A*
+                if (this.maze && this.mazeRenderer) {
+                    const currentSize = document.getElementById('mazeSize')?.value || 'medium';
+                    
+                    let rows, cols;
+                    if (currentSize === 'small') {
+                        rows = cols = 21;
+                    } else if (currentSize === 'large') {
+                        rows = cols = 41;
+                    } else {
+                        rows = cols = 31;
+                    }
+                    
+                    this.maze = new Maze(rows, cols);
+                    this.maze.generateMaze();
+                    this.mazeRenderer.maze = this.maze;
+                    this.mazeRenderer.render();
+                    this.mazeRenderer.updateSelectedDisplay();
+                    notifications.success('Maze reset with new layout');
                 }
-                
-                this.maze = new Maze(rows, cols);
-                this.maze.generateMaze();
-                this.mazeRenderer.maze = this.maze;
-                this.mazeRenderer.render();
-                this.mazeRenderer.updateSelectedDisplay();
-                notifications.success('Maze reset with new layout');
+            } else {
+                // Clear and regenerate graph for BFS/DFS
+                if (this.graph && this.graphRenderer) {
+                    this.graph.clear();
+                    const container = document.getElementById('graphContainer');
+                    const width = container ? container.clientWidth : 800;
+                    const height = container ? container.clientHeight : 400;
+                    
+                    let nodeCount = parseInt(document.getElementById('nodeCount')?.value || CONFIG.GRAPH.DEFAULT_NODES);
+                    nodeCount = Math.max(5, Math.min(30, nodeCount));
+                    
+                    let density = parseFloat(document.getElementById('graphDensity')?.value || CONFIG.GRAPH.DEFAULT_DENSITY);
+                    density = Math.max(0.2, Math.min(0.8, density));
+                    
+                    this.graph.generateRandom(nodeCount, density, width, height);
+                    this.graphRenderer.reset();
+                    this.graphRenderer.render();
+                    notifications.success('Graph reset with new layout');
+                }
             }
         } else if (this.data.length > 0) {
             this.drawArray(this.data);
@@ -4113,14 +3943,21 @@ const app = {
     },
     
     startVisualization() {
-        this.reset();
+        // Clear animation state without regenerating graph/maze
+        this.isAnimating = false;
+        this.animationQueue = [];
+        this.currentStep = 0;
+        statistics.reset();
         statistics.startTimer();
+        this.clearLog();
         
         const arrayCopy = [...this.data];
         let generator;
         
         // Sorting algorithms
         if (this.currentCategory === 'sorting') {
+            // Clear previous highlights
+            this.drawArray(this.data);
             if (this.currentAlgorithm === 'bubbleSort') {
                 generator = bubbleSort(arrayCopy);
             } else if (this.currentAlgorithm === 'selectionSort') {
@@ -4187,51 +4024,46 @@ const app = {
                 generator = ternarySearch(arrayCopy, target);
             }
         }
-        // Data structures
-        else if (this.currentCategory === 'dataStructures') {
-            // Generate random operations for demonstration
-            const operations = [];
-            const numOps = Math.min(10, Math.floor(arrayCopy.length / 2));
-            
-            if (this.currentAlgorithm === 'stack') {
-                for (let i = 0; i < numOps; i++) {
-                    operations.push({ type: 'push', value: arrayCopy[i] });
-                }
-                operations.push({ type: 'peek' });
-                for (let i = 0; i < Math.floor(numOps / 2); i++) {
-                    operations.push({ type: 'pop' });
-                }
-                generator = stackVisualization(operations);
-            } else if (this.currentAlgorithm === 'queue') {
-                for (let i = 0; i < numOps; i++) {
-                    operations.push({ type: 'enqueue', value: arrayCopy[i] });
-                }
-                for (let i = 0; i < Math.floor(numOps / 2); i++) {
-                    operations.push({ type: 'dequeue' });
-                }
-                generator = queueVisualization(operations);
-            }
-        }
-        // Graph algorithms - all use maze now
+        // Graph algorithms
         else if (this.currentCategory === 'graph') {
-            if (!this.maze.start || !this.maze.target) {
-                notifications.warning('Please select start and target cells');
-                return;
-            }
-            
-            this.addLog(`🎯 Finding path in ${this.maze.rows}x${this.maze.cols} maze`, true);
-            
-            // Reset maze visualization
-            this.mazeRenderer.render();
-            
-            if (this.currentAlgorithm === 'bfs') {
-                generator = bfsMaze(this.maze);
-            } else if (this.currentAlgorithm === 'dfs') {
-                generator = dfsMaze(this.maze);
-            } else if (this.currentAlgorithm === 'dijkstra') {
-                generator = dijkstraMaze(this.maze);
-            } else if (this.currentAlgorithm === 'aStar') {
-                generator = aStarMaze(this.maze);
+            // Check if using maze (Dijkstra/A*) or graph (BFS/DFS)
+            if (this.currentAlgorithm === 'dijkstra' || this.currentAlgorithm === 'aStar') {
+                // Use maze
+                if (!this.maze.start || !this.maze.target) {
+                    notifications.warning('Please select start and target cells');
+                    return;
+                }
+                
+                this.addLog(`🎯 Finding path in ${this.maze.rows}x${this.maze.cols} maze`, true);
+                
+                // Clear previous animation highlights (preserves maze structure and selections)
+                this.mazeRenderer.render();
+                
+                if (this.currentAlgorithm === 'dijkstra') {
+                    generator = dijkstraMaze(this.maze);
+                } else if (this.currentAlgorithm === 'aStar') {
+                    generator = aStarMaze(this.maze);
+                }
+            } else {
+                // Use graph for BFS/DFS
+                if (!this.graphRenderer.selectedStart || !this.graphRenderer.selectedTarget) {
+                    notifications.warning('Please select start and target nodes');
+                    return;
+                }
+                
+                const start = this.graphRenderer.selectedStart;
+                const target = this.graphRenderer.selectedTarget;
+                
+                this.addLog(`🎯 Finding path from ${this.graph.nodes.get(start).label} to ${this.graph.nodes.get(target).label}`, true);
+                
+                // Clear previous animation highlights (preserves graph structure and selections)
+                this.graphRenderer.render();
+                
+                if (this.currentAlgorithm === 'bfs') {
+                    generator = bfs(this.graph, start, target);
+                } else if (this.currentAlgorithm === 'dfs') {
+                    generator = dfs(this.graph, start, target);
+                }
             }
         }
         

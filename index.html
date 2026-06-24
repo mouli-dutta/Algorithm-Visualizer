@@ -74,7 +74,6 @@
                         <span class="collapse-icon">◀</span>
                     </button>
                 </div>
-                <input type="text" class="search-input" id="algorithmSearch" placeholder="Search algorithms...">
             </div>
             <nav class="sidebar-nav">
                 <div class="nav-category">
@@ -120,25 +119,21 @@
                         <li><button class="nav-item" data-algorithm="aStar">A* Pathfinding</button></li>
                     </ul>
                 </div>
-                <div class="nav-category">
-                    <h3 class="category-title" data-category="dataStructures">
-                        <span class="category-icon">📦</span>
-                        Data Structures
-                        <span class="category-arrow">▼</span>
-                    </h3>
-                    <ul class="category-items">
-                        <li><button class="nav-item" data-algorithm="stack">Stack</button></li>
-                        <li><button class="nav-item" data-algorithm="queue">Queue</button></li>
-                        <li><button class="nav-item" data-algorithm="linkedList">Linked List</button></li>
-                        <li><button class="nav-item" data-algorithm="bst">Binary Search Tree</button></li>
-                    </ul>
-                </div>
             </nav>
         </aside>
 
         <!-- Control Panel Sidebar -->
         <aside class="control-panel-sidebar" id="controlPanelSidebar">
-            <!-- Maze Section (for all graph algorithms) -->
+            <!-- Graph Section (for BFS/DFS) -->
+            <div class="control-section hidden" id="graphSection">
+                <h3 class="section-title">Graph</h3>
+                <button class="control-btn-vertical" id="generateGraphBtn" aria-label="Generate graph">
+                    <span class="btn-icon">🔄</span>
+                    <span class="btn-text">Generate</span>
+                </button>
+            </div>
+            
+            <!-- Maze Section (for Dijkstra/A*) -->
             <div class="control-section hidden" id="mazeSection">
                 <h3 class="section-title">Maze</h3>
                 <button class="control-btn-vertical" id="generateMazeBtn" aria-label="Generate maze">
